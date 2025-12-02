@@ -25,13 +25,13 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@gmail.com'
         ]);
 
-        $categories = ['Technoloy','Health','Science','sports', 'Politics', 'Entertainment',];
+        $categories = ['Technology','Health','Science','sports', 'Politics', 'Entertainment',];
 
         foreach($categories as $category){
             Category::create(['name'=>$category]);
         }
 
-        Post::factory(100)->create();
+        Post::factory(10)->create();
 
         
     }
