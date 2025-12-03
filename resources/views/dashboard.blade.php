@@ -61,86 +61,45 @@
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-4 text-gray-900">
-                    <div class="sm:hidden">
-                        <select id="tabs-icons"
-                            class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border rounded-base">
-                            <option value="All">All</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->name }}">{{ $category->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <ul class="hidden sm:flex text-sm font-medium text-center text-body -space-x-px">
-
-                        <li class="w-full">
-                            <a href="#" data-name="All"
-                                class="tab-item active-tab inline-flex items-center justify-center w-full px-4 py-2.5 border rounded-s-base">
-                                All
-                            </a>
-                        </li>
-
-                        @foreach ($categories as $category)
-                            <li class="w-full">
-                                <a href="#" data-name="{{ $category->name }}"
-                                    class="tab-item inline-flex items-center justify-center w-full px-4 py-2.5 border">
-                                    {{ $category->name }}
-                                </a>
-                            </li>
-                        @endforeach
-
-                    </ul>
-                </div>
-            </div>
+            <x-category-tabs />
 
             {{-- ----------------------- --}}
 
             <div class="mt-9 text-gray-900">
                 <div class="p-4">
-
                     <!-- Responsive Grid -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                        @foreach ($posts as $post)
+                        @forelse ($posts as $post)
+                            <x-post-item :post="$post" />
+
+                        @empty
+                            <!-- Beautiful Empty State -->
                             <div
-                                class="bg-white rounded-2xl shadow-md border hover:shadow-xl transition-all duration-300 overflow-hidden">
+                                class="col-span-1 sm:col-span-2 lg:col-span-3 flex flex-col items-center justify-center py-20">
 
-                                <!-- Image -->
-                                <a href="#">
-                                    <img class="w-full h-48 object-cover"
-                                        src="https://flowbite.com/docs/images/blog/image-1.jpg" alt="Post Image">
+                                <svg class="w-20 h-20 text-gray-400 mb-4" fill="none" stroke="currentColor"
+                                    stroke-width="1.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M3 16.5V21h4.5L19 9.5l-4.5-4.5L3 16.5z" />
+                                </svg>
+
+                                <h2 class="text-xl font-semibold text-gray-700 mb-2">No Posts Found</h2>
+
+                                <p class="text-gray-500 mb-4">There are no posts available right now. Please check back
+                                    later.</p>
+
+                                <a href="#"
+                                    class="px-5 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition">
+                                    Create New Post
                                 </a>
-
-                                <div class="p-5">
-
-                                    <!-- Title -->
-                                    <a href="#">
-                                        <h5 class="text-xl font-semibold text-gray-900 mb-3 hover:text-blue-600 transition">
-                                            {{ $post->title ?? 'Post Title' }}
-                                        </h5>
-                                    </a>
-
-                                    <!-- Description -->
-                                    <div class="text-gray-600 mb-4 line-clamp-3">
-                                        {{ Str::words($post->content ?? 'This is a short description of the blog post content...', 15) }}
-                                    </div>
-
-                                    <!-- Button -->
-                                    <a href="#"
-                                        class="inline-flex items-center bg-blue-600 text-white hover:bg-blue-700 transition font-medium rounded-lg px-4 py-2 text-sm">
-                                        Read More
-                                        <svg class="w-4 h-4 ml-1.5 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg"
-                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M19 12H5m14 0-4 4m4-4-4-4" />
-                                        </svg>
-                                    </a>
-
-                                </div>
                             </div>
-                        @endforeach
+                        @endforelse
 
+                    </div>
+
+                    <div class="mt-12">
+                        {{ $posts->links() }}
                     </div>
 
                 </div>

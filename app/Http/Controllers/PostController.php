@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -13,13 +12,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        $categories = Category::get();
         // $posts = Post::latest()->get();
-        $posts = Post::orderBy('created_at','DESC')->get();
+        $posts = Post::orderBy('created_at', 'DESC')->paginate(8);
+
         // dump($categories);
         // dump($posts);
-        #compact('categories')
-        return view('dashboard',['categories'=>$categories , 'posts'=>$posts]);
+        // compact('categories')
+        return view('dashboard', ['posts' => $posts]);
     }
 
     /**
