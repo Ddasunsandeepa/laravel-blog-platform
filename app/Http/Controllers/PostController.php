@@ -18,7 +18,7 @@ class PostController extends Controller
         // dump($categories);
         // dump($posts);
         // compact('categories')
-        return view('dashboard', ['posts' => $posts]);
+        return view('post.index', ['posts' => $posts]);
     }
 
     /**
